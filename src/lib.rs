@@ -96,7 +96,10 @@ fn expand_logging_init() -> Tokens {
   #[cfg(feature = "log")]
   quote! {
     {
-      let _ = ::env_logger::builder().is_test(true).try_init();
+        let _ = ::env_logger::Builder::new()
+          .filter_level(log::LevelFilter::Debug)
+          .is_test(true)
+          .try_init();
     }
   }
   #[cfg(not(feature = "log"))]
